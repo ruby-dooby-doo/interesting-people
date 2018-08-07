@@ -50,11 +50,12 @@ var HomePage = {
     toggleBio: function(inputPerson) {
       console.log('toggling the bio');
       // change from true to false or false to true
-      if (inputPerson.bioVisible === true) {
-        inputPerson.bioVisible = false;
-      } else {
-        inputPerson.bioVisible = true;
-      }
+      inputPerson.bioVisible = !inputPerson.bioVisible;
+      // if (inputPerson.bioVisible === true) {
+      //   inputPerson.bioVisible = false;
+      // } else {
+      //   inputPerson.bioVisible = true;
+      // }
     }
   },
   computed: {}
