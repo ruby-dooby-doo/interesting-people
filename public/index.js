@@ -11,11 +11,11 @@ var HomePage = {
   },
   created: function() {
     console.log('in the created function');
-    console.log('outside this')
-    console.log(this);
+    // console.log('outside this')
+    // console.log(this);
     axios.get('/api/people').then(function(response) {
-      console.log('inside this');
-      console.log(this);
+      // console.log('inside this');
+      // console.log(this);
       console.log(response.data);
       // reset the people array to the info that came back
       this.people = response.data;
@@ -35,7 +35,16 @@ var HomePage = {
       console.log('adding the person...');
       // get the info the user typed in
       // add that info to the array
-      this.people.push(this.newPerson);
+
+      var theParams = {
+        name: this.newPerson.name,
+        bio: this.newPerson.bio
+      };
+      axios.post('/api/people', theParams).then(function(response) {
+        console.log(response.data);
+        console.log('made the request to the api');
+        this.people.push(response.data);
+      });
     },
     toggleBio: function(inputPerson) {
       console.log('toggling the bio');
