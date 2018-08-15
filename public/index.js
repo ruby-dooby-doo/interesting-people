@@ -7,7 +7,9 @@ var HomePage = {
       message: "Welcome to Vue.js!",
       newPerson: {name: "", bio: "", bioVisible: true},
       people: [],
-      nameFilter: ""
+      nameFilter: "",
+      sortAttribute: "name",
+      sortOrder: 1
     };
   },
   created: function() {
@@ -56,6 +58,18 @@ var HomePage = {
       // } else {
       //   inputPerson.bioVisible = true;
       // }
+    },
+    setSortAttribute: function(attribute) {
+      this.sortAttribute = attribute;
+    },
+    toggleSortOrder: function() {
+      // if this.sortOrder is 1, switch it to -1, vice versa
+      // if (this.sortOrder === 1) {
+      //   this.sortOrder = -1;
+      // } else {
+      //   this.sortOrder = 1;
+      // }
+      this.sortOrder = this.sortOrder * -1;
     }
   },
   computed: {}

@@ -39,8 +39,16 @@
     <h1>{{ numberOfPeople() }}</h1>
     type in your search here: <input v-model="nameFilter">
 
+    <div>
+      <button v-on:click="setSortAttribute('name')">Sort by name</button>
+      <button v-on:click="setSortAttribute('bio')">Sort by bio</button>
+      <button v-on:click="toggleSortOrder()">Toggle sort order</button>
+    </div>
+
     <!-- <% @people.each do |person| %> -->
-    <div v-for="person in filterBy(people, nameFilter, 'name', 'bio')">
+    <!-- <div v-for="person in filterBy(people, nameFilter, 'name', 'bio')"> -->
+    <div v-for="person in orderBy(people, sortAttribute, sortOrder)">
+
       <p v-on:click="toggleBio(person)">{{ person.name }}</p>
       <!-- <p v-if="person.bioVisible">{{ person.bio }}</p> -->
       <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
