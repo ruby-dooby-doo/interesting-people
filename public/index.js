@@ -7,6 +7,7 @@ var HomePage = {
       message: "Welcome to Vue.js!",
       newPerson: {name: "", bio: "", bioVisible: true},
       people: [],
+      nameFilter: ""
     };
   },
   created: function() {

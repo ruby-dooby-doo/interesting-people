@@ -5,7 +5,11 @@
 <head>
   <meta charset="UTF-8">
   <title>My App</title>
+
+
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- what does this depend on?, what depends on it? -->
+  <script src="https://unpkg.com/vue2-filters/dist/vue2-filters.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="index.js" defer></script>
@@ -33,9 +37,10 @@
   <div class="vue-component">
 
     <h1>{{ numberOfPeople() }}</h1>
+    type in your search here: <input v-model="nameFilter">
 
     <!-- <% @people.each do |person| %> -->
-    <div v-for="person in people">
+    <div v-for="person in filterBy(people, nameFilter, 'name', 'bio')">
       <p v-on:click="toggleBio(person)">{{ person.name }}</p>
       <!-- <p v-if="person.bioVisible">{{ person.bio }}</p> -->
       <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
