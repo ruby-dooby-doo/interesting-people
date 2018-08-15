@@ -1,4 +1,80 @@
 /* global Vue, VueRouter, axios */
+var PricingPage = {
+  template: "#pricing-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      newPerson: {name: "", bio: "", bioVisible: true},
+      people: [],
+      nameFilter: "",
+      sortAttribute: "name",
+      sortOrder: 1,
+      className: "ruby dooby doo"
+    };
+  },
+  created: function() {
+    console.log('in the created function');
+    // console.log('outside this')
+    // console.log(this);
+    axios.get('/api/people').then(function(response) {
+      // console.log('inside this');
+      // console.log(this);
+      console.log(response.data);
+      // reset the people array to the info that came back
+      this.people = response.data;
+    }.bind(this));
+  },
+  methods: {
+    removePerson: function(inputPerson) {
+      // find the index of the inputPerson
+      var index = this.people.indexOf(inputPerson);
+      // remove the person from the array
+      this.people.splice(index, 1);
+    },
+    numberOfPeople: function() {
+      return this.people.length;
+    },
+    addPerson: function() {
+      console.log('adding the person...');
+      // get the info the user typed in
+      // add that info to the array
+
+      var theParams = {
+        name: this.newPerson.name,
+        bio: this.newPerson.bio
+      };
+      axios.post('/api/people', theParams).then(function(response) {
+        console.log(response.data);
+        console.log('made the request to the api');
+        this.people.push(response.data);
+      });
+    },
+    toggleBio: function(inputPerson) {
+      console.log('toggling the bio');
+      // change from true to false or false to true
+      inputPerson.bioVisible = !inputPerson.bioVisible;
+      // if (inputPerson.bioVisible === true) {
+      //   inputPerson.bioVisible = false;
+      // } else {
+      //   inputPerson.bioVisible = true;
+      // }
+    },
+    setSortAttribute: function(attribute) {
+      this.sortAttribute = attribute;
+    },
+    toggleSortOrder: function() {
+      // if this.sortOrder is 1, switch it to -1, vice versa
+      // if (this.sortOrder === 1) {
+      //   this.sortOrder = -1;
+      // } else {
+      //   this.sortOrder = 1;
+      // }
+      this.sortOrder = this.sortOrder * -1;
+    }
+  },
+  computed: {}
+};
+
 
 var HomePage = {
   template: "#home-page",
@@ -9,7 +85,8 @@ var HomePage = {
       people: [],
       nameFilter: "",
       sortAttribute: "name",
-      sortOrder: 1
+      sortOrder: 1,
+      className: "ruby dooby doo"
     };
   },
   created: function() {
@@ -76,7 +153,10 @@ var HomePage = {
 };
 
 var router = new VueRouter({
-  routes: [{ path: "/", component: HomePage }],
+  routes: [
+    { path: "/", component: HomePage },
+    { path: "/pricing", component: PricingPage }
+  ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };
   }
