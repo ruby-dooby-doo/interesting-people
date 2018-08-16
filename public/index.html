@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>My App</title>
-
+  <link rel="stylesheet" type="text/css" href="index.css">
 
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <!-- what does this depend on?, what depends on it? -->
@@ -12,15 +12,6 @@
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="index.js" defer></script>
 
-  <style type="text/css">
-    .blue {
-      color: blue;
-    }
-
-    .strike {
-      text-decoration: line-through;
-    }
-  </style>
 </head>
 <body>
   <div id="vue-app">
@@ -48,16 +39,18 @@
     </div>
 
     <!-- <% @people.each do |person| %> -->
-    <div v-for="person in orderBy(filterBy(people, nameFilter, 'name', 'bio'), sortAttribute, sortOrder)">
-    <!-- <div v-for="person in orderBy(people, sortAttribute, sortOrder)"> -->
+    <transition-group name="slide-left">
+      <!-- <div v-for="person in orderBy(people, sortAttribute, sortOrder)"> -->
+      <div v-for="person in orderBy(filterBy(people, nameFilter, 'name', 'bio'), sortAttribute, sortOrder)" v-bind:key="person.id">
 
-      <p v-on:click="toggleBio(person)">{{ person.name }}</p>
-      <!-- <p v-if="person.bioVisible">{{ person.bio }}</p> -->
-      <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
+        <p v-on:click="toggleBio(person)">{{ person.name }}</p>
+        <!-- <p v-if="person.bioVisible">{{ person.bio }}</p> -->
+        <p v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</p>
 
-      <button v-on:click="removePerson(person)">Delete this person</button>
-      <hr>
-    </div>
+        <button v-on:click="removePerson(person)">Delete this person</button>
+        <hr>
+      </div>
+    </transition-group>
 
     name: <input v-model="newPerson.name">
     bio: <input v-model="newPerson.bio">
