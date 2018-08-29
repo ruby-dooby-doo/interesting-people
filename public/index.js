@@ -124,7 +124,7 @@ var HomePage = {
         console.log(response.data);
         console.log('made the request to the api');
         this.people.push(response.data);
-      }.bind(this));
+      });
     },
     toggleBio: function(inputPerson) {
       console.log('toggling the bio');
